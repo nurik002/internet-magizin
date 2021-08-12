@@ -1,0 +1,140 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    about
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        <!-- ========================  About ======================== -->
+        <section class="about pt-4 pt-lg-5">
+
+            <!--Header-->
+
+            <header>
+                <div class="container">
+                    <h2 class="title">About page</h2>
+                    <div class="text">
+                        <p>Suspendisse scelerisque odio eu felis eleifend, vitae gravida magna iaculis. Vestibulum
+                            volutpat,
+                            purus in consectetur porta, velit felis suscipit metus, et pharetra enim augue suscipit est.
+                            Aenean non ante tortor. Nam egestas tincidunt turpis, quis accumsan est vestibulum non</p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Main image-->
+
+            <div class="container-fluid">
+                <div class="image">
+                    <img src="{% static 'assets/images/gallery-2.jpg' %}" alt="Alternate Text"/>
+                </div>
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Divano Store</h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam accumsan efficitur dui in
+                            porttitor.
+                            Donec mollis volutpat consectetur. Vestibulum pulvinar iaculis dolor, molestie semper
+                            ulvinar
+                            iaculis purus lacinia quis.
+                        </p>
+                        <p>
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                            egestas.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Our success</h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam accumsan efficitur dui in
+                            porttitor.
+                            Donec mollis volutpat consectetur. Vestibulum pulvinar iaculis dolor, molestie semper
+                            ulvinar
+                            iaculis purus lacinia quis.
+                        </p>
+                        <p>
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                            egestas.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>What we beleive in</h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam accumsan efficitur dui in
+                            porttitor.
+                            Donec mollis volutpat consectetur. Vestibulum pulvinar iaculis dolor, molestie semper
+                            ulvinar
+                            iaculis purus lacinia quis.
+                        </p>
+                        <p>
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                            egestas.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- ========================  Team ======================== -->
+        <section class="team">
+
+            <!--Header-->
+
+            <header>
+                <div class="container">
+                    <h1 class="h2 title">Meet our team</h1>
+                    <div class="text">
+                        <p>Our architects and designers constantly and carefully monitor the environment, they accept
+                            and
+                            develop changes, research fashion and architectural, as well as sociological, changes and
+                            transform them into unique design.</p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Content-->
+
+            <div class="container">
+
+                <div class="row">
+
+                    <!--Team member-->
+
+                    {% for team in teams %}
+                        <div class="col-md-3" data-3d>
+                            <article>
+                                <div class="details details-text">
+                                    <div class="inner">
+                                        <h5 class="title">{{ team.name }}</h5>
+                                        <h6 class="title">{{ team.position }}</h6>
+                                    </div>
+                                </div>
+                                <div class="image">
+                                    <img src="{{ team.image.url }}" alt=""/>
+                                </div>
+                                <div class="details details-social">
+                                    <div class="inner">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
+
+
+                </div> <!--/row-->
+
+            </div>
+
+        </section>
+        {% include 'Layout/about-info.html' %}
+    </div>
+{% endblock %}

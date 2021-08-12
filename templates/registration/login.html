@@ -1,0 +1,66 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Log in" %}{% endblock %}
+
+{% block re_title %}{% trans "Log in" %}{% endblock %}
+{% block content %}
+    <form method="post" class="register-form" id="login-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}"/>
+        {% for error in form.non_field_errors %}
+            <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+
+        <div class="form-group">
+            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+            <input type="text" name="username" id="your_name" placeholder="Your Name"/>
+        </div>
+        {% for error in form.username.errors %}
+            <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+        <div class="form-group">
+            <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+            <input type="password" name="password" id="your_pass" placeholder="Password"/>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" name="remember-me" id="remember-me" class="agree-term"/>
+            <label for="remember-me" class="label-agree-term"><span><span></span></span>{% trans 'Remember me' %}
+            </label>
+            <a href="{% url 'auth_password_reset' %}" class="signup-image-link">{% trans "Forgot your password?" %}</a>
+            <a href="{% url 'registration_register' %}" class="signup-image-link">{% trans 'Register' %}</a>
+        </div>
+        <div class="form-group form-button">
+            <input type="submit" name="signin" id="signin" class="form-submit" value="{% trans 'Log in' %}"/>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% comment %}
+**registration/login.html**
+
+It's your responsibility to provide the login form in a template called
+registration/login.html by default. This template gets passed four
+template context variables:
+
+``form``
+    A Form object representing the login form. See the forms
+    documentation for more on Form objects.
+
+``next``
+    The URL to redirect to after successful login. This may contain a
+    query string, too.
+
+``site``
+    The current Site, according to the SITE_ID setting. If you don't
+    have the site framework installed, this will be set to an instance
+    of RequestSite, which derives the site name and domain from the
+    current HttpRequest.
+
+``site_name``
+    An alias for site.name. If you don't have the site framework
+    installed, this will be set to the value of
+    request.META['SERVER_NAME']. For more on sites, see The
+    "sites" framework.
+{% endcomment %}

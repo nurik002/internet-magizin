@@ -1,0 +1,102 @@
+{% load static %}
+{% load i18n %}
+{% load mytags %}
+<nav>
+
+    <div class="container">
+
+        <a href="{% url 'pages:home' %}" class="logo"><img src="{% static 'assets/images/divano-logo.svg' %}" alt=""
+                                                           width="130"
+                                                           height="55"/></a>
+
+        <!-- ==========  Top navigation ========== -->
+
+        <div class="navigation navigation-top clearfix">
+            <ul>
+                <!--add active class for current page-->
+                <li class="left-side"><a href="{% url 'pages:home' %}" class="logo-icon"><img
+                        src="{% static 'assets/images/divano-logo.svg' %}" alt="Alternate Text" width="150"
+                        height="34"/></a></li>
+
+                {#                <li class="left-side"><a href="shortcodes.html">Shortcodes</a></li>#}
+                {% if request.user.is_authenticated %}
+                    <li class="left-side"><a href="{% url 'orders:order-history' %}">History</a></li>
+                    <li><a href="{% url 'user:profile' %}" class="open-search"><i class="icon icon-user"></i></a></li>
+                    <li><a href="{% url 'auth_logout' %}" class="open-login">{% trans 'Logout' %}</a></li>
+                {% else %}
+                    <li><a href="{% url 'auth_login' %}" class="open-login">{% trans 'Sing in' %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'pages:wishlist' %}"><i class="fa fa-heart"></i></a></li>
+                <li><a href="javascript:void(0);" class="open-search"><i class="icon icon-magnifier"></i></a></li>
+                <li><a href="{% url 'shop:card' %}" class="open-cart"><i class="icon icon-cart"></i>
+                    <span>{% count_cart_products request %}</span></a></li>
+            </ul>
+        </div>
+
+        <!-- ==========  Main navigation ========== -->
+
+        <div class="navigation navigation-main">
+            <a href="#" class="open-login"><i class="icon icon-user"></i></a>
+            <a href="#" class="open-search"><i class="icon icon-magnifier"></i></a>
+            <a href="{% url 'shop:card' %}" class="open-cart"><i class="icon icon-cart"></i>
+                <span>{% count_cart_products request %}</span></a>
+            <a href="#" class="open-menu"><i class="icon icon-menu"></i></a>
+
+            <div class="floating-menu">
+                <!--mobile toggle menu trigger-->
+                <div class="close-menu-wrapper">
+                    <span class="close-menu"><i class="icon icon-cross"></i></span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="{% url 'pages:home' %}">{% trans 'Home' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:about' %}">{% trans 'About' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'shop:products' %}">{% trans 'Product' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'blog:posts' %}">{% trans 'Blog' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:contact' %}">{% trans 'Contact' %}</a>
+                    </li>
+                    <li class="nav-settings">
+                        {% get_current_language as lang %}
+                        {% get_available_languages as langs %}
+                        <a href="javascript:void(0);"><span class="nav-settings-value">{{ lang }}</span> <span
+                                class="open-dropdown"><i class="fa fa-angle-down"></i></span></a>
+                        <div class="navbar-dropdown navbar-dropdown-single">
+                            <div class="navbar-box">
+                                <div class="box-full">
+                                    <div class="box clearfix">
+                                        <ul class="nav-settings-list">
+                                            {% for l in langs %}
+                                                {% if l.0 != lang %}
+                                                    <li>
+                                                        <a href="{% get_lang_url request l.0 %}">{{ l.0|upper }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ==========  Search wrapper ========== -->
+
+        <div class="search-wrapper">
+            <input class="form-control" id="searchFiled" placeholder="Search..."/>
+            <button class="btn btn-outline-dark btn-sm">{% trans 'Search now' %}</button>
+        </div>
+
+    </div>
+</nav>

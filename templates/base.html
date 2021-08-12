@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% load i18n %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Mobile Web-app fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Meta tags -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <!--Title-->
+    <title>{% block title %}{% endblock %} - Divano -</title>
+
+    <!--CSS bundle -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" media="all" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/animate.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/font-awesome.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/ion-range-slider.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/linear-icons.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/magnific-popup.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/owl.carousel.css' %}"/>
+    <link rel="stylesheet" media="all" href="{% static 'css/theme.css' %}"/>
+    {% block extra_css %}
+    {% endblock %}
+
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani:400,600,700&amp;subset=latin-ext" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+<div class="wrapper">
+
+    <!-- ======================== Navigation ======================== -->
+
+    {% include 'Layout/navbar.html' %}
+
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- ================== Footer  ================== -->
+
+    {% include 'Layout/footer.html' %}
+
+
+</div> <!--/wrapper-->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!--Scripts -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+    function ajaxPagination() {
+        $('#pagination a.page-link').each((index, el) => {
+            $(el).click((e) => {
+                e.preventDefault()
+                let page_url = $(el).attr('addUrlParameter')
+                console.log(page_url)
+                $.ajax({
+                    url: page_url,
+                    type: 'GET',
+                    success: (data) => {
+                        $('#products').empty()
+                        $('#products').append($(data).filter('#products').html(data))
+
+
+                        $('#pagination').empty()
+                        $('#pagination').append($(data).find('#pagination').html(data))
+                    }
+                })
+            })
+        })
+    }
+
+    $(document).ready(function () {
+        ajaxPagination()
+    })
+    $(document).ajaxStop(function () {
+        ajaxPagination()
+    })
+
+</script>
+{#end pagination ajax#}
+
+{#start search ajax#}
+<script>
+    const searchField = document.querySelector('#searchFiled');
+    const ProductsField = document.querySelector('#products')
+    searchField.addEventListener('keyup', (e) => {
+        const searchValue = e.target.value;
+        if (searchValue.length > 0) {
+            console.log('searchValue', searchValue)
+
+            fetch("/search-expenses/?" + new URLSearchParams({
+                q: searchValue,
+            }))
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log('data', data)
+                    ProductsField.style.display = 'none';
+                    let text = ''
+                    if (data.length === 0) {
+                        ProductsField.innerHTML = 'No results'
+                    } else {
+                        data.forEach((item) => {
+                            ProductsField.innerHTML +=`
+                            <h1${item.discount}
+                            `
+
+                        })
+                    }
+                });
+        } else {
+            ProductsField.style.display = 'block'
+        }
+    })
+</script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/ion.rangeSlider.js' %}"></script>
+<script src="{% static 'js/magnific-popup.js' %}"></script>
+<script src="{% static 'js/owl.carousel.js' %}"></script>
+<script src="{% static 'js/tilt.jquery.js' %}"></script>
+<script src="{% static 'js/jquery.easypiechart.js' %}"></script>
+<script src="{% static 'js/bigtext.js' %}"></script>
+<script src="{% static 'rating_js.js' %}"></script>
+
+{% block extra_js %}
+
+{% endblock %}
+
+</body>
+
+</html>

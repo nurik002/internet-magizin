@@ -1,0 +1,52 @@
+{% load i18n %}
+
+{% for product in products %}
+    <div class="col-6 col-lg-4">
+        <article id="products">
+            <div class="info">
+                  <span class="add-favorite">
+                      <a class="favorite" href="{% url 'pages:add-wishlist' pk=product.pk %}?next={{ request.path }}{{ request.GET.urlencode }}"
+                         data-title="Add to favorites"
+                         data-title-added="Added to favorites list">
+                          <i class="icon icon-heart"></i>
+                      </a>
+                  </span>
+                <span>
+                    <a href="#productid1" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
+                </span>
+            </div>
+            <div class="btn btn-add">
+                <a href="{% url 'shop:add_cart' pk=product.pk %}?next={{ request.path }}?{{ request.GET.urlencode }}"><i class="icon icon-cart"></i></a>
+            </div>
+            <div class="figure-grid">
+                {% if product.is_discount %}
+                    <span class="badge badge-danger">-{{ product.discount }}%</span>
+                {% endif %}
+                {% if product.is_new %}
+                    <span class="badge badge-info {% if product.is_discount %}mt-4{% endif %}">{% trans 'New arrival' %}</span>
+                {% endif %}
+                <div class="image">
+                    <a href="{% url 'shop:product-detail' pk=product.pk %}">
+                        <img src="{{ product.get_image }}" alt=""/>
+                    </a>
+                </div>
+                <div class="text">
+                    <h2 class="title h4">
+                        <a href="{% url 'shop:product-detail' pk=product.pk %}">{{ product.title }}</a>
+                    </h2>
+                    {% if product.is_discount %}
+                        <sub>$ {{ product.price }}</sub>
+                    {% endif %}
+                    <sup>$ {{ product.real_price }}</sup>
+                    <span class="description clearfix">
+                        Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam
+                        lorem ea duo labore diam sit et consetetur nulla
+                    </span>
+                </div>
+            </div>
+        </article>
+    </div>
+{% empty %}
+    <h1 style="margin-left: 500px">{% trans 'List is empty' %}</h1>
+
+{% endfor %}

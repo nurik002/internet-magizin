@@ -1,0 +1,92 @@
+<div class="col-lg-3">
+
+    <!-- === Product filters === -->
+
+    <div class="filters">
+
+        <div class="filter-scroll-list">
+
+            <div class="filter-header d-block d-sm-none">
+                <span class="h4">Filter products</span>
+                <br/>Select your options
+                <hr/>
+            </div>
+
+            <!--Colors-->
+
+            <div class="filter-box active">
+                <div class="title">
+                    Colors
+                </div>
+                <div class="filter-content">
+                    <div id="color" class="product-colors clearfix">
+                        {% for color in colors %}
+                            <a onclick="addUrlParameter('color',{{ color.pk }})">
+                                <span id="sort" class="color-btn color-btn-{{ color.title }}"></span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!--Price-->
+
+            <div class="filter-box active">
+                <div class="title">Price</div>
+                <div class="filter-content">
+                    <div class="price-filter">
+                        <input type="text" class="js-range-slider" name="my_range" value=""/>
+                    </div>
+                </div>
+            </div>
+
+            <!--Type-->
+
+            <div class="filter-box active">
+                <div class="title">
+                    Type
+                </div>
+                <div class="filter-content">
+                    <span class="checkbox">
+                    </span>
+                    {% for type in types %}
+                        <span class="checkbox">
+                        <a onclick="addUrlParameter('type',{{ type.pk }})">
+                            <input  {% if request.GET.type == type.pk|stringformat:"i" %}
+                                checked="checked" {% endif %}type="radio" name="radiogroup-type">
+                            <label>{{ type.title }}<i>(20)</i></label>
+                        </a>
+                        </span>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <!--Material-->
+
+            <div class="filter-box active">
+                <div class="title">
+                    Material
+                </div>
+                <div class="filter-content">
+                    {% for material in materials %}
+                        <span class="checkbox">
+                        <a onclick="addUrlParameter('material',{{ material.title }})">
+                            <input {% if request.GET.material == material.title|stringformat:"i" %}
+                                checked="checked" {% endif %} type="radio" id="matId{{ forloop.counter }}">
+                            <label for="matId{{ forloop.counter }}">{{ material.title }}<i></i></label>
+                        </a>
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        </div> <!--/filter-scroll-->
+        <!-- Close filters on mobile / update filters-->
+        <div class="toggle-filters-close btn btn-circle">
+            <i class="icon icon-cross"></i>
+        </div>
+
+    </div> <!--/filters-->
+</div>

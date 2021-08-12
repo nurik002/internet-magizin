@@ -1,0 +1,206 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    Contact
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- ========================  Contact ======================== -->
+
+    <section class="contact">
+
+        <!-- === Goolge map === -->
+
+        <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47937.70898539725!2d69.26374697826283!3d41.32829068350551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b9cdd04953d%3A0xf8109d550917a88e!2z0KfQvtGAY9GDINCx0LDQt9Cw0YA!5e0!3m2!1sru!2s!4v1621509744470!5m2!1sru!2s"
+                    width="10000" height="450" style="border:0;"></iframe>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-10 offset-md-1">
+
+                    <div class="contact-block">
+
+                        <div class="contact-info">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <figure class="text-center">
+                                        <span class="icon icon-map-marker"></span>
+                                        <figcaption>
+                                            <strong>{% trans 'Where are we?' %}</strong>
+                                            <span>200 12th Ave, New York, <br/>NY 10001, USA</span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                                <div class="col-sm-4">
+                                    <figure class="text-center">
+                                        <span class="icon icon-phone"></span>
+                                        <figcaption>
+                                            <strong>{% trans 'Call us' %}</strong>
+                                            <span>
+                                                    <strong>T</strong> +1 222 333 4444 <br/>
+                                                    <strong>F</strong> +1 222 333 5555
+                                                </span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                                <div class="col-sm-4">
+                                    <figure class="text-center">
+                                        <span class="icon icon-clock"></span>
+                                        <figcaption>
+                                            <strong>{% trans 'Working hours' %}</strong>
+                                            <span>
+                                                    <strong>Mon</strong> - Sat: 10 am - 6 pm <br/>
+                                                    <strong>Sun</strong> 12pm - 2 pm
+                                                </span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-info">
+                            {% blocktrans %}
+                                <h2 class="title">Send an email</h2>
+                                <p>
+                                    Thanks for your interest in Mobel Theme. We believe in creativity as one of the
+                                    major
+                                    forces of progress.
+                                    Please use this form if you have any questions about our products and we'll get back
+                                    with you very soon.
+                                </p>
+                            {% endblocktrans %}
+                            <div class="contact-form-wrapper">
+
+                                <div class="contact-form clearfix">
+                                    <form id="contactForm" method="post">
+                                        {% csrf_token %}
+                                        <div id="results"></div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input name="name" type="text" value="" class="form-control"
+                                                           placeholder="{% trans 'Your name' %}"
+                                                           required="required">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input name="email" type="email" value="" class="form-control"
+                                                           placeholder="{% trans 'Your email' %}"
+                                                           required="required">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                    <textarea name="message" class="form-control"
+                                                              placeholder="{% trans 'Your message' %}"
+                                                              rows="10"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 text-center">
+                                                    <input type="submit" class="btn btn-primary"
+                                                           value="{% trans 'Send message' %}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!--/contact-block-->
+            </div><!--col-sm-8-->
+        </div> <!--/row-->
+        </div><!--/container-->
+    </section>
+
+    <!-- ========================  Newsletter ======================== -->
+
+    <section class="banner">
+
+        <div class="container-fluid">
+
+            <div class="banner-image"
+                 style="background-image:url(https://uploads.montagehotels.com/uploads/sites/5/2020/01/09135145/residences-hero-11-1920x730.jpg)">
+                <!--Header-->
+
+                <header>
+                    <div class="container">
+
+                        <h2 class="h2 title">Stay in touch!</h2>
+                        <div class="text">
+                            <p>Be first to know about all new interior features!</p>
+                        </div>
+
+                    </div>
+                </header>
+
+                <!--Content-->
+
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <input type="email" class="form-control" name="name" value=""
+                                   placeholder="Enter your e-mail">
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" class="btn btn-clean">Subscribe now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!--/container-fluid-->
+
+    </section>
+
+    <!-- ========================  Benefits ======================== -->
+
+    {% include 'Layout/about-info.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // отслеживаем событие отправки формы
+            $('#contactForm').submit(function () {
+                // создаем AJAX-вызов
+                $.ajax({
+                    data: $(this).serialize(), // получаем данные формы
+                    type: $(this).attr('method'), // GET или POST
+                    url: "{% url 'pages:contact' %}",
+                    // если успешно, то
+                    success: function (response) {
+                        $('#results').html("<div class='alert alert-success' data-alert>Спасибо, что обратились к нам " + response.name +
+                            "</div>");
+                        $(this).serialize().removeData()
+                    },
+                    error: function (response) {
+                        console.log(response.responseJSON)
+                        let text = ""
+                        for (const [key, value] of Object.entries(response.responseJSON.errors)) {
+                            text += "<div class='alert alert-danger' data-alert>" + value + "</div>"
+                        }
+                        $('#results').html(text);
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+{% endblock %}

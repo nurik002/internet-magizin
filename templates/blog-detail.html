@@ -1,0 +1,264 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    blog-detail
+{% endblock %}
+
+
+{% block content %}
+    <div class="wrapper">
+
+        <!-- ========================  Blog article ======================== -->
+
+        <section class="blog pt-0">
+
+            <!--Header-->
+
+            <header class="d-none">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                    <h2 class="title">Blog grid</h2>
+                    <div class="text">
+                        <p>Suspendisse scelerisque odio eu felis eleifend</p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Blog navigation-->
+
+            <div class="blog-navigation">
+
+                <!--Nav prev-->
+
+                {% if object.get_prev %}
+                    <a class="nav-link prev" href="{% url 'blog:post-detail' object.get_prev.pk %}">
+                        <figure>
+                            <div class="image">
+                                <img src="{{ object.get_prev.image.url }}" alt="Alternate Text">
+                            </div>
+                            <figcaption>
+                                <div class="blog-title h6">{{ object.get_prev.title }}</div>
+                            </figcaption>
+                        </figure>
+                    </a>
+                {% endif %}
+
+                <!--Nav next-->
+
+                {% if object.get_next %}
+                    <a class="nav-link next" href="{% url 'blog:post-detail' pk=object.get_next.pk %}">
+                        <figure>
+                            <div class="image">
+                                <img src="{{ object.get_next.image.url }}" alt="Alternate Text">
+                            </div>
+                            <figcaption>
+                                <div class="blog-title h6">{{ object.get_next.title }}</div>
+                            </figcaption>
+                        </figure>
+                    </a>
+                {% endif %}
+            </div>
+
+            <!-- ========================  Blog post ======================== -->
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+
+                        <!--Blog post-->
+
+                        <div class="blog-post pt-3 pt-md-4">
+
+                            <!--Main image-->
+
+                            <div class="blog-image-main">
+                                <img src="{{ object.image.url }}" alt=""/>
+                            </div>
+
+                            <!--Blog content-->
+
+                            <div class="blog-post-content">
+
+                                <!--Title-->
+
+                                <div class="blog-post-title">
+
+                                    <h1 class="h1 blog-title">
+                                        {{ object.title }}
+                                    </h1>
+
+                                    <h2 class="blog-subtitle h5">
+                                        It might be as little as a pair of hands and feet, researchers in Japan found
+                                        after
+                                        recording subjects who wore an Oculus Rift headset.
+                                    </h2>
+
+                                    <!--Info-->
+
+                                    <div class="blog-info blog-info-top">
+                                        <div class="entry">
+                                            <i class="fa fa-user"></i>
+                                            <span>{{ object.author }}</span>
+                                        </div>
+                                        <div class="entry">
+                                            <i class="fa fa-calendar"></i>
+                                            <span>{{ object.created_at|date:'y.m.Y' }}</span>
+                                        </div>
+                                        <div class="entry">
+                                            <i class="fa fa-comments"></i>
+                                            <span>4 comments</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Blog text-->
+
+                                <div class="blog-post-text">
+
+                                    <h4>How connected are your body and your consciousness?</h4>
+                                    <p>
+                                        {{ object.content|safe }}
+                                    </p>
+                                </div>
+
+                                <!--Blog footer info-->
+
+                                <div class="blog-info blog-info-bottom">
+
+                                    <ul>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <i class="fa fa-folder-open"></i>
+                                            <span>
+                                                <a href="$">Technology</a>,
+                                                <a href="$">Illusion</a>,
+                                                <a href="$">Researchers</a>,
+                                                <a href="$">Scientific</a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-tag"></i>
+                                            <span>
+                                                {% for tag in object.tags.all %}
+                                                    <a href="#">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                                                {% endfor %}
+
+                                            </span>
+                                        </li>
+                                    </ul>
+
+                                </div> <!--/blog-info-->
+
+                            </div> <!--/blog-post-content-->
+
+                        </div><!--blog-post-->
+
+                        <div class="comments">
+
+                            <div class="comment-header">
+                                <div class="h3 m-0">Recent comments</div>
+                                <span>14 reviews for Bedroom product</span>
+                            </div>
+
+                            <div class="comment-wrapper">
+
+                                <!--Comment-->
+
+                                {% for comment in object.get_post_comments %}
+                                    <div class="comment-block">
+
+                                        <!--Comment user-->
+
+                                        <div class="comment-user">
+                                            <div>
+                                                <img src="{% static 'assets/images/user.jpg' %}" alt="Alternate Text"
+                                                     width="70"/>
+                                            </div>
+                                            <div>
+                                                <h5>
+                                                    <span>{{ comment.name }}</span>
+                                                    <span class="pull-right">
+                                                        <i class="fa fa-star active"></i>
+                                                        <i class="fa fa-star active"></i>
+                                                        <i class="fa fa-star active"></i>
+                                                        <i class="fa fa-star active"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                    <small>{{ comment.created_at|timesince }}</small>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                        <!--Comment description-->
+
+                                        <div class="comment-desc">
+                                            <p>
+                                                {{ comment.comment }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                                <!--Comment-->
+
+
+                            </div><!--/comment-wrapper-->
+
+                            <div class="comment-header text-center">
+                                <a href="#" class="btn btn-main">12 comments</a>
+                            </div>
+
+                            <!--Add new comment-->
+
+                            <div class="comment-add">
+
+                                <div class="comment-reply-message">
+                                    <div class="h3 title">Leave a Reply</div>
+                                    <p>Your email address will not be published.</p>
+                                </div>
+
+                                <form method="post" action="{% url 'blog:post-comment' pk=object.pk %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input name="name" type="text" class="form-control" value=""
+                                               placeholder="Your Name"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="email" type="text" class="form-control" value=""
+                                               placeholder="Your Email"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="comment" rows="10" class="form-control"
+                                                  placeholder="Your comment"></textarea>
+                                    </div>
+                                    <div class="clearfix text-center">
+                                        <button type="submit" class="btn btn-main">Add comment</button>
+                                    </div>
+                                </form>
+
+                            </div><!--/comment-add-->
+
+                        </div> <!--/comments-->
+
+
+                    </div><!--col-sm-8-->
+
+                </div> <!--/row-->
+
+            </div><!--/container-->
+
+        </section>
+
+
+    </div>
+
+{% endblock %}
+    

@@ -1,0 +1,65 @@
+﻿{% extends 'base.html' %}
+{% load mytags %}
+{% block title %}
+    checkout-1
+{% endblock %}
+
+
+{% block content %}
+    <div class="wrapper">
+
+        <!-- ========================  Checkout ======================== -->
+
+        <section class="checkout">
+
+            <!-- === header === -->
+
+            <header>
+                <div class="container">
+                    <h2 class="title">Cart page</h2>
+                    <div class="text">
+                        <p>Proceed your order details</p>
+                    </div>
+                </div>
+            </header>
+
+
+            <!-- === left content === -->
+            {% if request.session.cart|len_cart != 0 %}
+                <div class="container">
+
+                    <!-- ========================  Cart wrapper ======================== -->
+
+
+                    <div class="cart-wrapper">
+
+                        {% include 'Layout/cart_list_products.html' %}
+
+                        <!-- ========================  Cart navigation ======================== -->
+
+                        <div class="clearfix">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="#" class="btn btn-clean-dark"><span class="icon icon-chevron-left"></span>
+                                        Shop
+                                        more</a>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a href="{% url 'orders:order_create' %}" class="btn btn-clean-dark"><span
+                                            class="icon icon-cart"></span>
+                                        Proceed to delivery</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!--/container-->
+                </div>
+            {% else %}
+                <h1 class="text-center">Список пуст</h1>
+            {% endif %}
+
+        </section>
+
+    </div> <!--/wrapper-->
+{% endblock %}
+    

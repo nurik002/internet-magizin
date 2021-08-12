@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Wishlist Products
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+
+        <!-- ======================== Products ======================== -->
+
+        <section class="products pt-0">
+
+            <header>
+                <div class="container mt-4">
+                    <h2 class="title">Wishlist Products</h2>
+                </div>
+            </header>
+
+            <div class="container">
+
+                <div class="row">
+                        <!--Products collection-->
+
+                        <div class="row">
+
+                            {% include 'Layout/products-grid.html' %}
+
+
+                        </div> <!--/row-->
+
+                        {% include 'Layout/pagination.html' %}
+
+                    </div> <!--/col-lg-9-->
+
+                </div><!--/row-->
+            </div>
+
+
+        </section>
+
+
+    </div>
+{% endblock %}

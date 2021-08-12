@@ -1,0 +1,206 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load mytags %}
+{% load cache %}
+
+{% block title %}
+    products-list
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+
+        <!-- ======================== Products ======================== -->
+
+        <section class="products pt-0">
+
+            <header>
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                    <h2 class="title">Product list category</h2>
+                    <div class="text">
+                        <p>Nam egestas tincidunt turpis</p>
+                        <a href="{% url 'shop:products' %}">
+                            <h4>Clear filter</h4>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container">
+
+                <div class="row">
+
+                    <!-- === Left content === -->
+
+
+                        {% include 'products-fillter.html' %}
+
+                    <!--Right content-->
+
+                    <div class="col-lg-9">
+
+                        <!-- === Sort bar === -->
+
+                        <div class="sort-bar clearfix">
+
+                            <div class="sort-results pull-left">
+
+                                <!--Showing result per page-->
+
+
+                                <!--Items counter-->
+                                {% if page_obj.has_other_page %}
+                                    <span>Showing all <strong>{{ page_obj.start_index }}</strong> of <strong>{{ page_obj.paginator.count }}</strong> items</span>
+                                {% endif %}
+                            </div>
+
+                            <!--Sort options-->
+
+                            <div class="sort-options pull-right">
+
+                                <span class="d-none d-sm-inline-block">Sort by</span>
+
+                                <select onchange="addUrlParameter('sort',this.value)">
+                                    <option {% if request.GET.sort == '-price' %}selected{% endif %}
+                                            value="-price">Price: lowest
+                                    </option>
+                                    <option {% if request.GET.sort == 'price' %}selected{% endif %}
+                                            value="price">Price: highest
+                                    </option>
+                                </select>
+
+                                <!--Grid-list view-->
+
+
+                            </div> <!--/sort-options-->
+
+                        </div>
+
+                        <!--Products collection-->
+
+                        <div id="products" class="row">
+
+                            {% include 'Layout/products-grid.html' %}
+
+
+                        </div> <!--/row-->
+
+                        {% include 'Layout/pagination.html' %}
+
+
+                    </div> <!--/col-lg-9-->
+
+                </div><!--/row-->
+            </div>
+
+
+        </section>
+
+
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function addUrlParameter(name, value) {
+            let searchParams = new URLSearchParams(window.location.search)
+            if (searchParams.has(name) && searchParams.get(name) === value) {
+                searchParams.delete(name)
+            } else {
+                searchParams.set(name, value)
+            }
+
+            window.location.search = searchParams.toString()
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <script>
+        $(".js-range-slider").ionRangeSlider({
+            type: "double",
+            min: {{ min_price }},
+            max: {{ max_price }},
+            grid: true,
+            from: {% get_price request 0 %},
+            to: {% get_price request 1 %},
+            prefix: "$",
+            onFinish: function (data) {
+                let from = data.from;
+                let to = data.to;
+                let result = from.toString() + ';' + to.toString()
+                addUrlParameter('price', result);
+            }
+
+        });
+    </script>
+    <script>
+        $(window).on('load', function () {
+            setTimeout(function () {
+                $('.filters-fixed').addClass('active');
+            }, 2000)
+            setTimeout(function () {
+                $('.filters-fixed').removeClass('active');
+            }, 5500)
+        });
+
+    </script>
+    <script>
+        $(".favorite").onclick(function () {
+            $(".favorite").css("background-color", "black");
+            $(this).css("background-color", "red");
+        });
+        // Filters toggle functions
+        // ----------------------------------------------------------------
+
+        // Check if some filter boxes has class active
+        // then show hidden filters
+        $('.filters .filter-box').each(function () {
+            if ($(this).hasClass('active')) {
+                $(this).find('.filter-content').show();
+            }
+        });
+
+        // Toggle filter function
+        $('.filters .title').on('click', function (e) {
+            var $this = $(this),
+                $parent = $this.parent();
+            $parent.toggleClass('active');
+
+            if ($parent.hasClass('active')) {
+                $parent.find('.filter-content').slideDown(300);
+            } else {
+                $parent.find('.filter-content').slideUp(200);
+            }
+        });
+
+        // Update filter results - close dropdown filters
+        // ----------------------------------------------------------------
+
+        $('.filters .filter-update').on('click', function (e) {
+            $(this).closest('.filter-box')
+                .removeClass('active')
+                .find('.filter-content').slideUp(200);
+        });
+
+        // Show hide filters (only for mobile)
+        // ----------------------------------------------------------------
+
+        $('.toggle-filters-mobile').on('click', function () {
+            $('.filters').addClass('active');
+        });
+        $('.toggle-filters-close').on('click', function () {
+            $('.filters').removeClass('active');
+            $('html,body').animate({
+                scrollTop: $('body').offset().top
+            }, 800);
+            return false;
+        });
+    </script>
+{% endblock %}

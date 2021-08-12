@@ -1,0 +1,206 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    Index
+{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper">
+
+        <!-- ========================  Header content ======================== -->
+
+        <section class="header-content">
+
+            <h2 class="d-none">Slider element</h2>
+
+            <div class="container-fluid">
+
+                <div class="owl-slider owl-carousel owl-theme" data-autoplay="true">
+
+                    <!--Slide item-->
+
+                    {% for banner in banner %}
+                        <div class="item d-flex align-items-center"
+                             style="background-image:url({{ banner.image.url }})">
+                            <div class="container">
+                                <div class="caption">
+                                    <div class="animated" data-start="fadeInUp">
+                                        <div class="promo pt-3">
+                                            <div class="title title-sm p-0">Sofa Grace</div>
+                                        </div>
+                                    </div>
+                                    <div class="animated" data-start="fadeInUp">
+                                        Score new arrivals from latest items
+                                        <br/>
+                                        Multipurpose eCommerce template ready
+                                    </div>
+                                    <div class="animated" data-start="fadeInUp">
+                                        <div class="pt-3">
+                                            <a href="#" target="_blank" class="btn btn-outline-warning">Buy now</a>
+                                            <a href="#" target="_blank" class="btn btn-outline-light"> Get first
+                                                discount</a>
+                                        </div>
+                                    </div>
+                                    <div class="animated" data-start="fadeInUp">
+                                        <div class="promo pt-5">
+                                            <div class="h6 p-0 m-0">Get special price</div>
+                                            <div class="price">
+                                                <span>$1499,99</span>
+                                                <span>3499,99</span>
+                                            </div>
+                                            <small class="d-none d-sm-block">** Product prices with discount are
+                                                available
+                                                until
+                                                the end of stock </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                </div> <!--/owl-slider-->
+            </div>
+        </section>
+
+
+        <!-- ========================  Popular products  ======================== -->
+
+        <section class="products">
+
+            <!--Header-->
+
+            <header>
+                <div class="container">
+                    <h2 class="title">{% trans 'Latest Products' %}</h2>
+                    <div class="text">
+                        <p>
+                            {% trans 'Find your perfect match' %} <a href="{% url 'shop:products' %}"
+                                                                     class="btn btn-main">{% trans 'View all' %}</a>
+                        </p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Content-->
+
+            <div class="container">
+
+                <div class="row">
+
+                    <!--Product item-->
+                    {% include 'Layout/products-grid.html' %}
+                </div> <!--/row-->
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================  Cards ======================== -->
+
+        <section class="cards">
+
+            <!--Header-->
+
+            <header>
+                <div class="container">
+                    <h2 class="title">Interior inspiration</h2>
+                    <div class="text">
+                        <p>
+                            Create an inviting space for yourself and family
+                        </p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Content-->
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <!--Item-->
+
+                    {% for interior in interior %}
+                        {% if forloop.first %}
+                            <div class="col-lg-8">
+                                <figure>
+                                    <figcaption style="background-image:url({{ interior.image.url }})">
+                                        <img src="{% static 'assets/images/box-1.jpg' %}" alt=""/>
+                                    </figcaption>
+                                    <a href="#interiorId1" class="btn btn-clean">Open up for easy living</a>
+                                </figure>
+                            </div>
+                        {% else %}
+                            <div class="col-lg-4">
+                                <figure>
+                                    <figcaption style="background-image:url({{ interior.image.url }})">
+                                        <img src="{% static 'assets/images/box-2.jpg' %}" alt=""/>
+                                    </figcaption>
+                                    <a href="#interiorId1" class="btn btn-clean">Traditional looks</a>
+                                </figure>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                </div> <!--/row-->
+
+            </div> <!--/container-fluid-->
+
+        </section>
+
+        <!-- ========================  Blog ======================== -->
+
+        <section class="blog blog-widget blog-animated">
+
+            <!--Header-->
+
+            <header>
+                <div class="container">
+                    <h2 class="h2 title">{% trans 'Design stories' %}</h2>
+                    <div class="text">
+                        <p>
+                            {% trans 'Explore and unfold thoughts' %} <a href="{% url 'blog:posts' %}"
+                                                                         class="btn btn-main">View
+                            all</a>
+                        </p>
+                    </div>
+                </div>
+            </header>
+
+            <!--Content-->
+
+            <div class="container">
+
+                <div class="row">
+
+                    <!--Blog item-->
+
+                    {% for post in posts %}
+                        <div class="col-md-12 col-lg-4">
+                            {% include 'Layout/posts-grid.html' %}
+                        </div>
+                    {% endfor %}
+
+
+                </div> <!--/row-->
+
+            </div> <!--/container-->
+
+        </section>
+
+
+        <!-- ========================  Benefits ======================== -->
+
+        {% include 'Layout/about-info.html' %}
+
+
+    </div> <!--/wrapper-->
+
+{% endblock %}
+
